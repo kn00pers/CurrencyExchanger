@@ -19,7 +19,7 @@ struct CurrencyIcon: View {
                 .scaledToFit()
             //curency text
             Text(currencyName)
-                .padding(3)
+                .padding(5)
                 .font(.caption)
                 .frame(maxWidth: .infinity)
                 .background(.black.opacity(0.66))
@@ -29,8 +29,8 @@ struct CurrencyIcon: View {
         }
         .padding(3)
         .frame(width: 100, height: 100)
-        .background(.black.opacity(0.25))
-        .clipShape(.rect(cornerRadius: 25))
+        .background(.black.opacity(0.3))
+        .clipShape(.rect(cornerRadius: 40))
         
     }
 }

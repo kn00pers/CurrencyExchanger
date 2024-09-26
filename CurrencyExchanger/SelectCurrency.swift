@@ -10,6 +10,7 @@ import SwiftUI
 struct SelectCurrency: View {
     @Environment(\.dismiss) var dismiss
     @State var selectedCurrency: Currency
+    @State var selectedCurrency1: Currency1
     var body: some View {
         ZStack{
             Color.gray.ignoresSafeArea()
@@ -43,6 +44,28 @@ struct SelectCurrency: View {
                 Text("Select a currency you would like to convert to:")
                     .font(.headline)
                 
+                LazyVGrid(columns:[ GridItem(), GridItem(), GridItem()]){
+                    
+                    ForEach(Currency1.allCases){ currency in
+                        if selectedCurrency1 == currency{
+                            CurrencyIcon(currencyImage: currency.image, currencyName: currency.name)
+                                .shadow(color: .black, radius: 10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 40)
+                                        .stroke(.black, lineWidth: 2)
+                                        .opacity(0.5)
+                                )
+                        } else {
+                                CurrencyIcon(currencyImage: currency.image, currencyName: currency.name)
+                                .onTapGesture{
+                                    withAnimation{
+                                        selectedCurrency1 = currency
+                                    }
+                                }
+                        }
+                    }
+                }
+                
                 Button("Convert"){
                     dismiss()
                 }
@@ -59,5 +82,5 @@ struct SelectCurrency: View {
 }
 
 #Preview {
-    SelectCurrency(selectedCurrency: .silverPiece)
+    SelectCurrency(selectedCurrency: .silverPiece, selectedCurrency1: .goldPiece)
 }

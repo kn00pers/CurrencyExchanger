@@ -9,18 +9,33 @@ import SwiftUI
 
 struct SelectCurrency: View {
     @Environment(\.dismiss) var dismiss
+    @State var selectedCurrency: Currency
     var body: some View {
         ZStack{
             Color.gray.ignoresSafeArea()
             VStack{
-                Text("Currency you would like to start with:")
+                Text("Select the currency you would like to start with:")
                     .font(.headline)
                 HStack{
                     LazyVGrid(columns:[ GridItem(), GridItem(), GridItem()]){
                         
                         ForEach(Currency.allCases){ currency in
-                            CurrencyIcon(currencyImage: currency.image, currencyName: currency.name)
-                            
+                            if selectedCurrency == currency{
+                                CurrencyIcon(currencyImage: currency.image, currencyName: currency.name)
+                                    .shadow(color: .black, radius: 10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 40)
+                                            .stroke(.black, lineWidth: 2)
+                                            .opacity(0.5)
+                                    )
+                            } else {
+                                    CurrencyIcon(currencyImage: currency.image, currencyName: currency.name)
+                                    .onTapGesture{
+                                        withAnimation{
+                                            selectedCurrency = currency
+                                        }
+                                    }
+                            }
                         }
                     }
                     
@@ -36,6 +51,7 @@ struct SelectCurrency: View {
                 .foregroundStyle(.white)
                 .tint(.black)
                 .buttonStyle(.borderedProminent)
+
             }
             
         }
@@ -43,5 +59,5 @@ struct SelectCurrency: View {
 }
 
 #Preview {
-    SelectCurrency()
+    SelectCurrency(selectedCurrency: .silverPiece)
 }

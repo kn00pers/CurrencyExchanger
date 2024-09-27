@@ -10,8 +10,11 @@ import SwiftUI
 struct ContentView: View {
     
     @State public var showInfo = false
-    @State private var euro: String = ""
-    @State private var pln: String = ""
+    @State private var leftAmount: String = ""
+    @State private var rightAmount: String = ""
+    
+    @State var leftCurrency = Currency.silverPenny
+    @State var rightCurrency = Currency.goldPenny
     
     
     var body: some View {
@@ -29,6 +32,7 @@ struct ContentView: View {
                 Text("Currency Exchanger")
                     .font(.system(size: 30, weight: .bold, design: .default))
                     .padding(.top, 10)
+                    .padding(.bottom, 25)
                     .foregroundStyle(.black)
                 // currency conversion section
                 HStack{
@@ -37,18 +41,22 @@ struct ContentView: View {
                         // currency
                         HStack{
                             // currency image
-                            Image(systemName: "eurosign.circle")
-                                .padding(.top, 20)
-                            // currency text
-                            Text("EURO")
+                            Image(leftCurrency.image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 25)
+                                .frame(width: 25)
+                            
+                            Text(leftCurrency.name)
                                 .font(.headline)
-                                .padding(.top, 20)
+                                .foregroundStyle(.black)
+                                
                         }
                         // Textfield
                         HStack{
                             TextField(
-                                "euro: ",
-                                text: $euro
+                                "Amount",
+                                text: $leftAmount
                             )
                             .textFieldStyle(.roundedBorder)
                             .padding(.all, 20)
@@ -58,27 +66,29 @@ struct ContentView: View {
                     }
                     // equal sign
                     Image(systemName: "equal")
-                        .padding(.top, 20)
+                        .padding(.top, 35)
                         .font(.headline)
                         .symbolEffect(.pulse)
                     // right conversion section
                     VStack{
                         // currency
                         HStack{
-                            // currency text
-                            Text("PLN")
-                                .padding(.top, 20)
-                                .font(.headline)
                             // currency image
-                            Image(systemName:
-                                    "polishzlotysign.circle")
-                                .padding(.top, 20)
+                            Image(rightCurrency.image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 25)
+                                .frame(width: 25)
+                            
+                            Text(rightCurrency.name)
+                                .font(.headline)
+                                .foregroundStyle(.black)
                         }
                         // Textfield
                         HStack{
                             TextField(
-                                "PLN: ",
-                                text: $pln
+                                "Amount",
+                                text: $rightAmount
                             )
                             .textFieldStyle(.roundedBorder)
                             .padding(.all, 20)

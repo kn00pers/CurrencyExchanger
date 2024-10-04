@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct IconGrid: View {
-    @State var selectedCurrency: Currency
+    @Binding var selectedCurrency: Currency
     var body: some View {
         LazyVGrid(columns:[ GridItem(), GridItem(), GridItem()]){
             ForEach(Currency.allCases){ currency in
@@ -34,5 +34,5 @@ struct IconGrid: View {
 }
 
 #Preview {
-    IconGrid(selectedCurrency: .silverPiece)
+    IconGrid(selectedCurrency: .constant(.silverPiece))
 }

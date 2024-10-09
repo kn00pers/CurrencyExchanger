@@ -11,11 +11,14 @@ struct ContentView: View {
     
     @State public var showInfo = false
     @State public var showSelectCurrency = false
-    @State private var leftAmount: String = ""
-    @State private var rightAmount: String = ""
+    @State private var leftAmount = ""
+    @State private var rightAmount = ""
     
-    @State var leftCurrency = Currency.silverPenny
-    @State var rightCurrency = Currency.goldPenny
+    @FocusState var leftTyping
+    @FocusState var rightTyping
+    
+    @State var leftCurrency: Currency = .silverPenny
+    @State var rightCurrency: Currency = .goldPenny
     
     
     var body: some View {
@@ -64,6 +67,8 @@ struct ContentView: View {
                             )
                             .textFieldStyle(.roundedBorder)
                             .padding(.all, 20)
+                            .focused($leftTyping)
+                            .keyboardType(.decimalPad)
                         }
      
                         
@@ -99,6 +104,8 @@ struct ContentView: View {
                             )
                             .textFieldStyle(.roundedBorder)
                             .padding(.all, 20)
+                            .focused($rightTyping)
+                            .keyboardType(.decimalPad)
                         }
                     }
                 }
@@ -121,12 +128,35 @@ struct ContentView: View {
                     .sheet(isPresented:$showSelectCurrency){
                         SelectCurrency(topCurrency: $leftCurrency, bottomCurrency: $rightCurrency)
                     }
+                    .onChange(of: leftAmount){
+                        if leftTyping == true {
+                            rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
+                        }
+                    }
+                    .onChange(of: rightAmount){
+                        if rightTyping == true {
+                            leftAmount = rightCurrency.convert( rightAmount, to: leftCurrency)
+                        }
+                    }
+                    .onChange(of: leftCurrency){
+                        leftAmount = rightCurrency.convert(rightAmount, to: leftCurrency)
+                    }
+                    .onChange(of: rightCurrency){
+                        rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
+                    }
                 }
+
 
                 
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                leftTyping = false
+                rightTyping = false
+            }
         }
     }
+
 }
 
 #Preview {

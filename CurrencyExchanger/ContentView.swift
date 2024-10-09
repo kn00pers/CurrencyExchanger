@@ -33,7 +33,7 @@ struct ContentView: View {
                     .frame(height: 100)
                     .padding(.all, 50)
                 // currency exchange text
-                Text("Currency Exchanger")
+                Text("Coin Exchanger")
                     .font(.system(size: 30, weight: .bold, design: .default))
                     .padding(.top, 10)
                     .padding(.bottom, 25)

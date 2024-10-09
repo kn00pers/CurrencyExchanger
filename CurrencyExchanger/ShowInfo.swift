@@ -22,11 +22,10 @@ struct ShowInfo: View {
                     
                 
                 VStack{
-                    Text("You can choose the currency you want to exchange by clicking it's icon / name ")
+                    Text("To select a coin, tap on the coin's icon/name to exchange")
                         .foregroundStyle(.white)
                         .padding(.all, 20)
                         .multilineTextAlignment(.center)
-                    
                     Text("Here you have the exchange rates ")
                         .foregroundStyle(.white)
                         .padding(.all, 20)
